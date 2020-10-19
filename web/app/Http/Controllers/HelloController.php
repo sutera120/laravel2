@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 // use App\MyClasses\MyService;
 use App\MyClasses\MyServiceInterface;
 use App\Facades\MyService;
+use Illuminate\Support\Facades\DB;
 
 
 class HelloController extends Controller
@@ -20,9 +21,15 @@ class HelloController extends Controller
 
     public function index(Request $request)
     {
+        $id = $request->query('page');
+        $msg = 'show page: ' . $id;
+        $result = DB::table('people')
+        ->paginate(1, ['*'], 'page', $id);
+
+
         $data = [
-            'msg' => $request->hello,
-            'data' => $request->alldata,
+            'msg' => $msg,
+            'data' => $result,
         ];
         return view('hello.index', $data);
     }

@@ -16,16 +16,13 @@ use App\Http\Middleware\HelloMiddleware;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/hello/{id}', 'HelloController@index');
 
 Route::get('/hello', 'HelloController@index')
     ->middleware('MyMW');
 
 
-Route::get('/hello/{id}', 'HelloController@index')
-    ->middleware(App\Http\Middleware\MyMiddleware::class);
 
 Route::get('/hello/other', 'HelloController@other');
 
 Route::get('/sample', 'Sample\SampleController@index')->name('sample');
-
-Route::get('/hello/{id}', 'HelloController@index')->where('id', '[0-9]+');
