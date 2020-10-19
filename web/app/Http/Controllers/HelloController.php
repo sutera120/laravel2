@@ -6,23 +6,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
-use App\MyClasses\MyService;
+// use App\MyClasses\MyService;
+use App\MyClasses\MyServiceInterface;
+use App\Facades\MyService;
 
 
 class HelloController extends Controller
 {
-    function __construct(MyService $myservice)
+    function __construct()
     {
-        $myservice = app('App\MyClasses\MyService');
     }
 
 
-    public function index(MyService $myservice, int $id = -1)
+    public function index(Request $request)
     {
-        $myservice->setId($id);
         $data = [
-            'msg' => $myservice->say($id),
-            'data' => $myservice->alldata()
+            'msg' => $request->hello,
+            'data' => $request->alldata,
         ];
         return view('hello.index', $data);
     }
