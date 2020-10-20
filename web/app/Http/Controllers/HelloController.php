@@ -9,6 +9,8 @@ use Illuminate\Http\Response;
 // use App\MyClasses\MyService;
 use App\MyClasses\MyServiceInterface;
 use App\Facades\MyService;
+use App\Person;
+use App\Http\Pagination\MyPaginator;
 use Illuminate\Support\Facades\DB;
 
 
@@ -21,15 +23,13 @@ class HelloController extends Controller
 
     public function index(Request $request)
     {
-        $id = $request->query('page');
-        $msg = 'show page: ' . $id;
-        $result = DB::table('people')
-        ->paginate(1, ['*'], 'page', $id);
-
+        $msg = 'show people record.';
+        $re = Person::get();
+        $fields = Person::get()->fields();
 
         $data = [
-            'msg' => $msg,
-            'data' => $result,
+            'msg' => implode(', ', $fields),
+            'data' => $re,
         ];
         return view('hello.index', $data);
     }
