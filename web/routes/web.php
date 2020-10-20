@@ -16,13 +16,19 @@ use App\Http\Middleware\HelloMiddleware;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/hello/{id}', 'HelloController@index');
 
 Route::get('/hello', 'HelloController@index')
-    ->middleware('MyMW');
-
-
+->middleware('MyMW')->name('hello');
 
 Route::get('/hello/other', 'HelloController@other');
+
+Route::get('/hello/json', 'HelloController@json');
+Route::get('/hello/json/{id}', 'HelloController@json');
+
+Route::get('/hello/{id}/{name}', 'HelloController@save');
+
+Route::get('/hello/{id}', 'HelloController@index');
+
+
 
 Route::get('/sample', 'Sample\SampleController@index')->name('sample');
